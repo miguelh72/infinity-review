@@ -22,5 +22,8 @@
   "bugs": {
     "url": "https://github.com/miguelh72/infinity-review/issues"
   },
-  "homepage": "https://github.com/miguelh72/infinity-review#readme"
+  "homepage": "https://github.com/miguelh72/infinity-review#readme",
+  "devDependencies": {
+    "jest": "^27.0.6"
+  }
 }
