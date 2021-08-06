@@ -7,7 +7,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "cross-env NODE_OPTIONS=--experimental-vm-modules npx jest"
   },
   "repository": {
     "type": "git",
@@ -24,6 +24,8 @@
   },
   "homepage": "https://github.com/miguelh72/infinity-review#readme",
   "devDependencies": {
-    "jest": "^27.0.6"
-  }
+    "jest": "^27.0.6",
+    "cross-env": "^7.0.3"
+  },
+  "dependencies": {}
 }
