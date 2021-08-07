@@ -24,8 +24,9 @@
   },
   "homepage": "https://github.com/miguelh72/infinity-review#readme",
   "devDependencies": {
-    "jest": "^27.0.6",
-    "cross-env": "^7.0.3"
+    "@types/jest": "^26.0.24",
+    "cross-env": "^7.0.3",
+    "jest": "^27.0.6"
   },
   "dependencies": {}
 }
