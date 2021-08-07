@@ -8,9 +8,10 @@ export default class Collection {
 	 * @param {string} algorithm Approach used to find next material to display. Choose between 'sequential', 'semi-random', 'time-weighed-least-reviewed'
 	 * @param  {...Material} materials (optional) all additional parameters are initial material to populate the list with
 	 */
-	constructor(schedule = 'daily', algorithm = 'sequential', ...materials) {
-		this._schedule = schedule;
-		this._algorithm = algorithm;
+	constructor(schedule = 'daily', algorithm = 'sequential', lastNotified = Date.now(), ...materials) {
+		this.schedule = schedule;
+		this.algorithm = algorithm;
+		this.lastNotified = lastNotified;
 		this._materialArray = [];
 		this.addMaterial(...materials);
 	}
@@ -43,6 +44,21 @@ export default class Collection {
 		return this._algorithm;
 	}
 
+	set lastNotified(newLastNotified) {
+		if (typeof newLastNotified !== 'number') {
+			throw new TypeError('lastNotified must be a number');
+		}
+		if (newLastNotified < 1596768910196) {
+			// one year before this line was written
+			throw new RangeError('lastNotified must be UNIX epoch milliseconds');
+		}
+
+		this._lastNotified = newLastNotified;
+	}
+	get lastNotified() {
+		return this._lastNotified;
+	}
+
 	addMaterial(...materialArray) {
 		// store in all or nothing approach
 		const newMaterials = [];
@@ -71,6 +87,27 @@ export default class Collection {
 
 		this._materialArray.splice(index, 1);
 		return this;
+	}
+
+	hasNotification() {
+		if (this._materialArray.length === 0) {
+			return false;
+		}
+
+		const lastUpdateDateString = new Date(this._lastNotified).toDateString();
+		const todayDateString = new Date().toDateString();
+		switch (this._schedule) {
+			case 'daily':
+				return new Date(this._lastNotified).getDate() !== new Date().getDate();
+			case 'every-other-day':
+				// more than one day in between means they are more than two days apart counting by start of each day
+				return new Date(todayDateString).getTime() - new Date(lastUpdateDateString).getTime() > 24 * 60 * 60 * 1000;
+			case 'weekly':
+				// more than 6 day in between means they are more than two days apart counting by start of each day
+				return new Date(todayDateString).getTime() - new Date(lastUpdateDateString).getTime() > 6 * 24 * 60 * 60 * 1000;
+			default:
+				throw new Error('hasNotification could not handle schedule equal to ' + this._schedule);
+		}
 	}
 }
 Collection.allowedSchedules = ['daily', 'every-other-day', 'weekly'];

@@ -49,8 +49,8 @@ export default class Material {
 		if (typeof newLastUpdated !== 'number') {
 			throw new TypeError('lastUpdated must be a number');
 		}
-		if (newLastUpdated < 1628234460973) {
-			// time this line was written
+		if (newLastUpdated < 1596768910196) {
+			// one year before time this line was written
 			throw new RangeError('lastUpdated must be UNIX epoch milliseconds');
 		}
 		this._lastUpdated = newLastUpdated;
