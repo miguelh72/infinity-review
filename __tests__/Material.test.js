@@ -12,7 +12,7 @@ test('create Material object', () => {
 	expect(material).toBeInstanceOf(Material);
 	expect(material.name).toBe(name);
 	expect(material.link).toBe(url);
-	for (let i = 0; i < 10000; i++) {} // stall engine just a bit
+	for (let i = 0; i < 100000; i++) {} // stall engine just a bit
 	expect(material.lastUpdated).toBeLessThan(Date.now());
 	expect(material.timesReviewed).toBe(0);
 
