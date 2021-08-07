@@ -1,3 +1,4 @@
+import { FormatError } from '../src/errors';
 import Material from '../src/Material';
 
 test('create Material object', () => {
@@ -11,6 +12,7 @@ test('create Material object', () => {
 	expect(material).toBeInstanceOf(Material);
 	expect(material.name).toBe(name);
 	expect(material.link).toBe(url);
+	for (let i = 0; i < 10000; i++) {} // stall engine just a bit
 	expect(material.lastUpdated).toBeLessThan(Date.now());
 	expect(material.timesReviewed).toBe(0);
 
@@ -41,4 +43,17 @@ test('modify Material object', () => {
 	expect(material.link).toBe(url + '/test');
 	expect(material.timesReviewed).toBe(timesReviewed);
 	expect(material.lastUpdated).toBe(lastUpdated);
+});
+
+test('edge cases', () => {
+	const name = 'test name';
+	const url = 'www.example.com';
+
+	let material = new Material(name, url);
+	expect(() => (material.name = 5)).toThrow(TypeError);
+	expect(() => (material.link = 'badboyswhatyougunnado')).toThrow(FormatError);
+	expect(() => (material.timesReviewed = 'hello world')).toThrow(TypeError);
+	expect(() => (material.timesReviewed = -2)).toThrow(RangeError);
+	expect(() => (material.lastUpdated = 'beep boop')).toThrow(TypeError);
+	expect(() => (material.lastUpdated = new Date('07/01/2020').getTime())).toThrow(RangeError);
 });
