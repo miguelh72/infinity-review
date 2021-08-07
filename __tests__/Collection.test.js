@@ -28,8 +28,6 @@ test('create Collection', () => {
 });
 
 test('add material', () => {
-	const algorithm = Collection.allowedAlgorithms[0];
-	const schedule = Collection.allowedSchedules[0];
 	const material1 = new Material('name', 'http://www.example.com');
 	const material2 = new Material('name2', 'www.anotherexample.com');
 
