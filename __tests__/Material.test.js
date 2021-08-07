@@ -4,7 +4,7 @@ import Material from '../src/Material';
 test('create Material object', () => {
 	const name = 'test name';
 	const url = 'www.example.com';
-	const lastUpdated = Date.now();
+	const lastUpdated = Date.now() - 500;
 	const timesReviewed = 5;
 
 	let material = new Material(name, url);
@@ -12,8 +12,7 @@ test('create Material object', () => {
 	expect(material).toBeInstanceOf(Material);
 	expect(material.name).toBe(name);
 	expect(material.link).toBe(url);
-	for (let i = 0; i < 100000; i++) {} // stall engine just a bit
-	expect(material.lastUpdated).toBeLessThan(Date.now());
+	expect(material.lastUpdated).toBeLessThan(Date.now() + 1);
 	expect(material.timesReviewed).toBe(0);
 
 	material = new Material(name + 'a', url + '/test', lastUpdated, timesReviewed);
