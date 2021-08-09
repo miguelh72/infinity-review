@@ -135,3 +135,18 @@ test('is collection ready to notify', () => {
 	collection = new Collection('weekly', algorithm, new Date(new Date().toDateString()).getTime() - 6 * oneDayInMs, material);
 	expect(collection.hasNotification()).toBe(false);
 });
+
+test('sequential algorithm', () => {
+	const materials = [...Array(10).keys()].map((i) => 'name ' + i).map((name) => new Material(name, 'www.example.com'));
+	const collection = new Collection();
+	expect(() => collection.getNextMaterialToNotify()).toThrow(RangeError);
+
+	collection.addMaterial(...materials);
+	expect(collection.getMaterialList().length).toBe(materials.length);
+
+	for (let i = 0; i < materials.length * 2; i++) {
+		expect(collection.getNextMaterialToNotify()).toMatchObject(materials[i % materials.length]);
+	}
+});
+
+// Todo verify last material index updates accordingly when items are removed

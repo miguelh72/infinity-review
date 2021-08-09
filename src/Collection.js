@@ -13,6 +13,7 @@ export default class Collection {
 		this.algorithm = algorithm;
 		this.lastNotified = lastNotified;
 		this._materialArray = [];
+		this._lastMaterialIndex;
 		this.addMaterial(...materials);
 	}
 
@@ -108,6 +109,18 @@ export default class Collection {
 			default:
 				throw new Error('hasNotification could not handle schedule equal to ' + this._schedule);
 		}
+	}
+
+	getNextMaterialToNotify() {
+		if (this._materialArray.length === 0) {
+			throw new RangeError('there are no materials in collection');
+		}
+
+		this._lastMaterialIndex = this._lastMaterialIndex ?? 0;
+		if (this._lastMaterialIndex >= this._materialArray.length) {
+			this._lastMaterialIndex = 0;
+		}
+		return this._materialArray[this._lastMaterialIndex++];
 	}
 }
 Collection.allowedSchedules = ['daily', 'every-other-day', 'weekly'];
