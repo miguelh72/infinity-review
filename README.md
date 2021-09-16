@@ -3,6 +3,6 @@ App that reminds users to review links on a schedule.
 
 # contributor list
 Miguel Hernandez
-Derrick Holleman (testing PR again)
+Derrick Holleman
 
 ## Changelog
