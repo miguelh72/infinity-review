@@ -6,9 +6,13 @@
   "scripts": {
     "test": "jest",
     "clean": "cross-env rm -rf dist",
-    "build": "concurrently \"npm run build-client\"",
+    "build": "concurrently \"npm run build-client\" \"npm run build-server\"",
     "build-client": "cross-env NODE_ENV=production webpack",
-    "dev": "cross-env NODE_ENV=development webpack serve"
+    "build-server": "tsc -p ./src/server/tsconfig.json",
+    "watch-build-server": "tsc -p ./src/server/tsconfig.json --watch",
+    "dev": "cross-env NODE_ENV=development webpack serve",
+    "dev-server": "concurrently \"npm run watch-build-server\" \"cross-env NODE_ENV=development nodemon --watch ./dist/server ./dist/server/server/index.js\"",
+    "server": "cross-env NODE_ENV=production node ./dist/server/server/index.js"
   },
   "repository": {
     "type": "git",
