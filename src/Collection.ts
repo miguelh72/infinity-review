@@ -1,5 +1,5 @@
-import { FormatError } from './errors.js';
-import Material from './Material.js';
+import { FormatError } from './shared/errors';
+import Material from './Material';
 
 export default class Collection {
 	/**

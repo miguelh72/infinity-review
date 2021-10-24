@@ -1,6 +1,7 @@
-import { FormatError } from './errors.js';
+import { FormatError } from './errors';
 
 export function validateName(name) {
+	// TODO properly validate name using regex
 	if (typeof name !== 'string') {
 		throw new TypeError('name must be of type string');
 	}
